@@ -1,0 +1,27 @@
+apply plugin: 'com.novoda.bintray-release'
+
+allprojects {
+    repositories {
+        jcenter()
+    }
+    tasks.withType(Javadoc) {
+        options{
+            encoding "UTF-8"
+            charSet 'UTF-8'
+            links "http://docs.oracle.com/javase/7/docs/api"
+        }
+        options.addStringOption('Xdoclint:none', '-quiet')
+    }
+}
+
+def siteUrl = 'https://github.com/HenleyLee/ChannelApkBuild'
+
+publish {
+    userOrg = 'henleylee'
+    groupId = 'com.channel.apkbuild'
+    artifactId = 'channel-apk-build'
+    publishVersion = '3.5.2'
+    uploadName = 'ChannelApkBuild'
+    desc = 'Android V1 and V2 Signature Channel Package Plugin.'
+    website = siteUrl
+}

@@ -1,0 +1,3 @@
+include ':app'
+include ':channel-apk-build'
+rootProject.name='ChannelApkBuild'

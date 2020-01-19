@@ -1,0 +1,38 @@
+apply plugin: 'groovy'
+
+dependencies {
+    implementation gradleApi()
+    implementation localGroovy()
+    implementation 'org.json:json:20160810'
+    implementation 'com.android.tools.build:gradle:3.5.3'
+
+    // Gson(https://github.com/google/gson)
+    implementation 'com.google.code.gson:gson:2.8.5'
+
+    // Walle(https://github.com/Meituan-Dianping/walle)
+    implementation 'com.meituan.android.walle:payload_reader:1.1.6'
+    implementation 'com.meituan.android.walle:payload_writer:1.1.6'
+}
+
+repositories {
+    mavenCentral()
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
+}
+
+tasks.withType(GroovyCompile) {
+    groovyOptions.encoding = "UTF-8"
+}
+
+javadoc {
+    options {
+        encoding "UTF-8"
+        charSet 'UTF-8'
+        author true
+        version true
+    }
+}
+
+apply from: '../gradle/bintray.gradle'

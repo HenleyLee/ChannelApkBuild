@@ -1,0 +1,78 @@
+def date = new Date().format("yyyy-MM-dd")
+def configDir = "../config/"
+def extraDir = "extra-release"
+def extraPath = file("${project.rootDir}/apk")
+
+ext {
+    // 是否启用渠道包任务
+    channelEnable = true
+    // 渠道配置json文件位置
+    configJson = file("${configDir}/channel.json")
+    // flavor资源文件位置
+    flavorDir = file("${configDir}/flavor/")
+}
+
+def getChannelEnableValue() {
+    return hasProperty("channelEnable") ? channelEnable : ext.channelEnable
+}
+
+def getChannelConfigJsonValue() {
+    return hasProperty("configJson") ? configJson : ext.configJson
+}
+
+def getChannelFlavorDirValue() {
+    return hasProperty("flavorDir") ? flavorDir : ext.flavorDir
+}
+
+// 打包插件
+apply plugin: 'com.channel.apkbuild'
+
+// 渠道打包配置
+channelApkBuild {
+    // 是否启用渠道包任务
+    channelEnable = getChannelEnableValue()
+    // 渠道配置json文件位置
+    configJson = getChannelConfigJsonValue()
+    // flavor资源文件位置
+    flavorDir = getChannelFlavorDirValue()
+    // release渠道包放置位置，默认放在 build/outputs/release/ 文件夹中
+    releaseChannelDir = file("${extraPath}/${date}/")
+}
+
+// 复制R文件和mapping文件
+android.applicationVariants.all { variant ->
+
+    variant.outputs.all { out ->
+
+        variant.assembleProvider.get().doLast {
+
+            if (variant.buildType.debuggable) {
+                return
+            }
+            copy {
+                def variantData = variant.variantData
+                def configuration = variantData.variantConfiguration
+                def versionName = configuration.versionName
+                def appName = outputFileName.substring(0, outputFileName.indexOf(versionName) - 1)
+                def destPath = file("${extraPath}/${date}/${appName}/${extraDir}/")
+                def fileNamePrefix = "${project.name}-${variant.baseName}-${versionName}"
+
+                System.in.println()
+                System.in.println("start copy R file and mapping file...")
+                from "${buildDir}/intermediates/symbols/${variant.dirName}/R.txt"
+                into destPath
+                rename { String fileName ->
+                    fileName.replace("R.txt", "${fileNamePrefix}-R.txt")
+                }
+                System.in.println("copy R file ${fileNamePrefix}-R.txt success in dir ${destPath}！")
+
+                from "${buildDir}/outputs/mapping/${variant.dirName}/mapping.txt"
+                into destPath
+                rename { String fileName ->
+                    fileName.replace("mapping.txt", "${fileNamePrefix}-mapping.txt")
+                }
+                System.in.println("copy mapping file ${fileNamePrefix}-mapping.txt success in dir ${destPath}！\n")
+            }
+        }
+    }
+}

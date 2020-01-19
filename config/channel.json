@@ -1,0 +1,90 @@
+{
+  "groups": [
+    {
+      "group": "cash",
+      "isGroup": true,
+      "appId": "com.prosperbee.abcash",
+      "appName": "ABCash",
+      "versionCode": 100,
+      "versionName": "1.0.0",
+      "signingName": "channel",
+      "srcDir": [
+        "basic"
+      ],
+      "resValues": {
+        "facebook_app_id" : ""
+      },
+      "manifestValues": {
+        "APP_SCHEME" : "channel"
+      },
+      "buildConfigValues": {
+        "APP_SCHEME" : "channel"
+      },
+      "buildConfigBoolValues": {
+        "shareAvailable" : false
+      }
+    }
+  ],
+  "flavors": [
+    {
+      "flavorName": "dev",
+      "group": "cash",
+      "appId": "com.prosperbee.abcash",
+      "appName": "ABCash",
+      "srcDir": [
+        "cash"
+      ],
+      "channels": [
+        { "source": 5000, "channel": "官方" },
+        { "source": 5001, "channel": "Google" },
+        { "source": 5002, "channel": "应用宝" },
+        { "source": 5003, "channel": "华为" },
+        { "source": 5004, "channel": "小米" },
+        { "source": 5005, "channel": "魅族" },
+        { "source": 5006, "channel": "OPPO" },
+        { "source": 5007, "channel": "VIVO" },
+        { "source": 5008, "channel": "360" }
+      ],
+      "resValues": {
+        "facebook_app_id" : "416002399080674"
+      },
+      "manifestValues": {
+      },
+      "buildConfigValues": {
+        "APPS_FLYER_KEY": "RdnCyNqkNMmaqdYSkPgZri"
+      },
+      "buildConfigBoolValues": {
+      }
+    },
+    {
+      "flavorName": "cash",
+      "group": "cash",
+      "appId": "com.prosperbee.abcash",
+      "appName": "ABCash",
+      "srcDir": [
+        "cash"
+      ],
+      "channels": [
+        { "source": 5000, "channel": "官方" },
+        { "source": 5001, "channel": "Google" },
+        { "source": 5002, "channel": "应用宝" },
+        { "source": 5003, "channel": "华为" },
+        { "source": 5004, "channel": "小米" },
+        { "source": 5005, "channel": "魅族" },
+        { "source": 5006, "channel": "OPPO" },
+        { "source": 5007, "channel": "VIVO" },
+        { "source": 5008, "channel": "360" }
+      ],
+      "resValues": {
+        "facebook_app_id" : "416002399080674"
+      },
+      "manifestValues": {
+      },
+      "buildConfigValues": {
+        "APPS_FLYER_KEY": "RdnCyNqkNMmaqdYSkPgZri"
+      },
+      "buildConfigBoolValues": {
+      }
+    }
+  ]
+}
