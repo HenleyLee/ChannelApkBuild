@@ -219,6 +219,10 @@ final class ApplyConfigHelper {
                         classField = new ClassFieldImpl("String", SigningConfigHelper.APP_SIGNATURE, "\"" + "V1" + "\"")
                     }
                     productFlavor.buildConfigFields.put(SigningConfigHelper.APP_SIGNATURE, classField)
+                    ClassField classFieldV1 = new ClassFieldImpl("boolean", SigningConfigHelper.V1_ENABLED, String.valueOf(signingConfig.v1SigningEnabled))
+                    productFlavor.buildConfigFields.put(SigningConfigHelper.V1_ENABLED, classFieldV1)
+                    ClassField classFieldV2 = new ClassFieldImpl("boolean", SigningConfigHelper.V2_ENABLED, String.valueOf(signingConfig.v2SigningEnabled))
+                    productFlavor.buildConfigFields.put(SigningConfigHelper.V2_ENABLED, classFieldV2)
                     Logger.info("product flavor ${productFlavor.name} signing config is ${signingConfig}")
                 }
             }

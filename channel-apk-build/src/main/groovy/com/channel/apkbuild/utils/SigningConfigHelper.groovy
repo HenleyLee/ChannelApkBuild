@@ -12,6 +12,8 @@ import com.android.builder.model.SigningConfig
 final class SigningConfigHelper {
 
     public static final String APP_SIGNATURE = "APP_SIGNATURE"
+    public static final String V1_ENABLED = "v1SigningEnabled"
+    public static final String V2_ENABLED = "v2SigningEnabled"
 
     static SigningConfig getSigningConfig(BaseVariant variant) {
         return variant.buildType.signingConfig == null ? variant.mergedFlavor.signingConfig : variant.buildType.signingConfig
