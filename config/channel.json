@@ -1,10 +1,10 @@
 {
   "groups": [
     {
-      "group": "cash",
+      "group": "basic",
       "isGroup": true,
-      "appId": "com.prosperbee.abcash",
-      "appName": "ABCash",
+      "appId": "com.henley.channel.apkbuild",
+      "appName": "ChannelApkBuild",
       "versionCode": 100,
       "versionName": "1.0.0",
       "signingName": "channel",
@@ -12,13 +12,13 @@
         "basic"
       ],
       "resValues": {
-        "facebook_app_id" : ""
       },
       "manifestValues": {
+        "APP_HOST" : "apkbuild.com",
         "APP_SCHEME" : "channel"
       },
       "buildConfigValues": {
-        "APP_SCHEME" : "channel"
+        "APP_TYPE": "main"
       },
       "buildConfigBoolValues": {
         "shareAvailable" : false
@@ -27,63 +27,53 @@
   ],
   "flavors": [
     {
-      "flavorName": "dev",
-      "group": "cash",
-      "appId": "com.prosperbee.abcash",
-      "appName": "ABCash",
+      "flavorName": "flavor1",
+      "group": "basic",
+      "appId": "com.channel.apkbuild.flavor1",
+      "appName": "Flavor1",
+      "signingName": "channel",
       "srcDir": [
-        "cash"
+        "flavor1"
       ],
       "channels": [
-        { "source": 5000, "channel": "官方" },
-        { "source": 5001, "channel": "Google" },
-        { "source": 5002, "channel": "应用宝" },
-        { "source": 5003, "channel": "华为" },
-        { "source": 5004, "channel": "小米" },
-        { "source": 5005, "channel": "魅族" },
-        { "source": 5006, "channel": "OPPO" },
-        { "source": 5007, "channel": "VIVO" },
-        { "source": 5008, "channel": "360" }
+        { "source": 1000, "channel": "Official" },
+        { "source": 1001, "channel": "Google" }
       ],
       "resValues": {
-        "facebook_app_id" : "416002399080674"
       },
       "manifestValues": {
+        "APP_SCHEME" : "channel1"
       },
       "buildConfigValues": {
-        "APPS_FLYER_KEY": "RdnCyNqkNMmaqdYSkPgZri"
+        "APP_TYPE": "channel1"
       },
       "buildConfigBoolValues": {
+        "shareAvailable" : true
       }
     },
     {
-      "flavorName": "cash",
-      "group": "cash",
-      "appId": "com.prosperbee.abcash",
-      "appName": "ABCash",
+      "flavorName": "flavor2",
+      "group": "basic",
+      "appId": "com.channel.apkbuild.flavor2",
+      "appName": "Flavor2",
+      "signingName": "channel",
       "srcDir": [
-        "cash"
+        "flavor2"
       ],
       "channels": [
-        { "source": 5000, "channel": "官方" },
-        { "source": 5001, "channel": "Google" },
-        { "source": 5002, "channel": "应用宝" },
-        { "source": 5003, "channel": "华为" },
-        { "source": 5004, "channel": "小米" },
-        { "source": 5005, "channel": "魅族" },
-        { "source": 5006, "channel": "OPPO" },
-        { "source": 5007, "channel": "VIVO" },
-        { "source": 5008, "channel": "360" }
+        { "source": 1000, "channel": "Official" },
+        { "source": 1001, "channel": "Google" }
       ],
       "resValues": {
-        "facebook_app_id" : "416002399080674"
       },
       "manifestValues": {
+        "APP_SCHEME" : "channel2"
       },
       "buildConfigValues": {
-        "APPS_FLYER_KEY": "RdnCyNqkNMmaqdYSkPgZri"
+        "APP_TYPE": "channel2"
       },
       "buildConfigBoolValues": {
+        "shareAvailable" : false
       }
     }
   ]

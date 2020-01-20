@@ -9,13 +9,14 @@ android {
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
+        flavorDimensions "channel"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     signingConfigs {
 
         channel {
-            storeFile file('../channel.jks')
+            storeFile file('./channel.jks')
             storePassword '123456'
             keyAlias 'channel'
             keyPassword '123456'
@@ -36,6 +37,15 @@ android {
             minifyEnabled false
         }
     }
+
+    productFlavors {
+
+        "flavor1" {}
+
+        "flavor2" {}
+
+    }
+
 }
 
 dependencies {
@@ -48,4 +58,4 @@ dependencies {
 }
 
 // ChannelApkBuild配置
-//apply from: '../gradle/channel.gradle'
+apply from: '../gradle/channel.gradle'
