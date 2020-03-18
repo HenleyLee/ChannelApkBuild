@@ -1,6 +1,6 @@
 package com.channel.apkbuild.utils
 
-import com.android.build.gradle.AndroidConfig
+import com.android.build.gradle.BaseExtension
 import com.android.build.gradle.api.AndroidSourceDirectorySet
 import com.android.build.gradle.api.AndroidSourceSet
 import com.android.builder.internal.ClassFieldImpl
@@ -11,6 +11,7 @@ import com.channel.apkbuild.ChannelJsonData
 import com.channel.apkbuild.FlavorConfig
 import com.channel.apkbuild.FlavorItem
 import com.google.gson.Gson
+
 /**
  * 应用配置信息辅助类
  *
@@ -157,7 +158,7 @@ final class ApplyConfigHelper {
      * @param android
      * @param flavorConfigMap 渠道配置信息
      */
-    static void applyAndroidSource(AndroidConfig android, Map<String, FlavorConfig> flavorConfigMap) {
+    static void applyAndroidSource(BaseExtension android, Map<String, FlavorConfig> flavorConfigMap) {
         int size = 0
         for (AndroidSourceSet sourceSet : android.sourceSets) {
             AndroidSourceDirectorySet srcSet = sourceSet.res
@@ -188,7 +189,7 @@ final class ApplyConfigHelper {
      * @param android
      * @param flavorConfigMap 渠道配置信息
      */
-    static void applyProductFlavor(AndroidConfig android, Map<String, FlavorConfig> flavorConfigMap) {
+    static void applyProductFlavor(BaseExtension android, Map<String, FlavorConfig> flavorConfigMap) {
         // 读取签名配置信息
         HashMap<String, SigningConfig> signingMap = getSigningConfigs(android)
 
@@ -236,7 +237,7 @@ final class ApplyConfigHelper {
      *
      * @param project
      */
-    private static HashMap<String, SigningConfig> getSigningConfigs(AndroidConfig android) {
+    private static HashMap<String, SigningConfig> getSigningConfigs(BaseExtension android) {
         HashMap<String, SigningConfig> signingMap = new HashMap<>()
         for (SigningConfig signingConfig : android.signingConfigs) {
             signingMap.put(signingConfig.name, signingConfig)

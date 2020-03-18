@@ -4,7 +4,7 @@ dependencies {
     implementation gradleApi()
     implementation localGroovy()
     implementation 'org.json:json:20160810'
-    implementation 'com.android.tools.build:gradle:3.5.3'
+    implementation 'com.android.tools.build:gradle:3.6.1'
 
     // Gson(https://github.com/google/gson)
     implementation 'com.google.code.gson:gson:2.8.5'
@@ -36,3 +36,16 @@ javadoc {
 }
 
 apply from: '../gradle/bintray.gradle'
+
+//apply plugin: 'maven'
+//
+//uploadArchives {
+//    repositories {
+//        mavenDeployer {
+//            repository(url: uri('../repository'))
+//            pom.groupId = 'com.channel.apkbuild'
+//            pom.artifactId = 'channel-apk-build'
+//            pom.version = '3.6.1'
+//        }
+//    }
+//}

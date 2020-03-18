@@ -112,7 +112,8 @@ public class ChannelApkBuildPlugin implements Plugin<Project> {
 
                     variant.assembleProvider.get().doLast {
                         PackageAndroidArtifact packageAndroidArtifact = variant.packageApplicationProvider.get()
-                        File apkFile = new File(packageAndroidArtifact.outputDirectory, apkData.outputFileName)
+                        File outputDirectory = packageAndroidArtifact.outputDirectory.asFile.get()
+                        File apkFile = new File(outputDirectory, apkData.outputFileName)
                         BaseChannelApkMaker channelApkMaker
                         if (SigningConfigHelper.isV2SignatureSchemeEnabled(variant)) {
                             channelApkMaker = ChannelApkMaker.getChannelApkMakerV2()
