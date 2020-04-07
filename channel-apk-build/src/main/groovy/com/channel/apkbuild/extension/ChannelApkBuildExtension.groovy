@@ -16,6 +16,10 @@ public class ChannelApkBuildExtension {
      */
     boolean channelEnable
     /**
+     * Whether to write channel information
+     */
+    boolean writeChannel
+    /**
      * Flavor resource file directory
      */
     File flavorDir
@@ -54,6 +58,7 @@ public class ChannelApkBuildExtension {
     String toString() {
         return "ChannelApkBuildExtension{" +
                 "channelEnable=" + channelEnable +
+                ", writeChannel=" + writeChannel +
                 ", flavorDir=" + flavorDir +
                 ", configJson=" + configJson +
                 ", releaseChannelDir=" + releaseChannelDir +

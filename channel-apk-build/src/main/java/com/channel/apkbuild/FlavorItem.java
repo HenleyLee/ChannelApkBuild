@@ -62,9 +62,6 @@ public class FlavorItem {
     }
 
     private synchronized FlavorItem initData() {
-        String accountType = appId;
-        String authorities = appId + ".sync";
-
         if (srcDir == null) {
             srcDir = new TreeSet<>();
         }
@@ -80,21 +77,11 @@ public class FlavorItem {
             manifestValues = new LinkedHashMap<>();
         }
         manifestValues.put("APPLICATION_ID", appId);
-        manifestValues.put("SYNC_DATA_AUTHORITIES", authorities);
-        if (manifestValues.containsKey("APP_HOST")) {
-            buildConfigValues.put("APP_HOST", manifestValues.get("APP_HOST"));
-        }
-        if (manifestValues.containsKey("APP_SCHEME")) {
-            buildConfigValues.put("APP_SCHEME", manifestValues.get("APP_SCHEME"));
-        }
 
         if (resValues == null) {
             resValues = new LinkedHashMap<>();
         }
         resValues.put("app_name", appName);
-        resValues.put("provider_authority", authorities);
-        resValues.put("account_type", accountType);
-        resValues.put("account_safe_desc", appName + "不会同步您的隐私信息");
         if (resValues.containsKey("facebook_app_id")) {
             resValues.put("fb_login_protocol_scheme", "fb" + resValues.get("facebook_app_id"));
         }

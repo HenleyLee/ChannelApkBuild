@@ -1,6 +1,6 @@
 package com.channel.apkbuild.maker
 
-import com.android.annotations.Nullable
+
 import com.android.apksig.ApkVerifier
 import com.android.apksig.internal.util.AndroidSdkVersion
 import com.channel.apkbuild.ChannelConfig
@@ -10,7 +10,6 @@ import com.channel.apkbuild.utils.Consts
 import com.channel.apkbuild.utils.Logger
 import com.google.gson.Gson
 import org.gradle.api.GradleException
-
 /**
  * Generate Channel Apks
  *
@@ -20,9 +19,20 @@ import org.gradle.api.GradleException
 abstract class BaseChannelApkMaker {
 
     private static final String APK_SUFFIX = ".apk"
-    private static final String NAME_SEPARATOR = "-"
+    private static final String SEPARATOR = "-"
     private static final Integer MIN_VERSION = AndroidSdkVersion.GINGERBREAD
     private static final Integer MAX_VERSION = Integer.MAX_VALUE
+
+    boolean writeChannel
+    File releaseDir
+
+    void setWriteChannel(boolean writeChannel) {
+        this.writeChannel = writeChannel
+    }
+
+    void setReleaseDir(File releaseDir) {
+        this.releaseDir = releaseDir
+    }
 
     final void checkSignature(File apkFile) {
         ApkVerifier apkVerifier = new ApkVerifier.Builder(apkFile)
@@ -47,7 +57,10 @@ abstract class BaseChannelApkMaker {
             Logger.error("write channel message but base apk not found!")
             return
         }
-
+        if (!writeChannel) {
+            Logger.error("write channel information is not enabled!")
+            return
+        }
         if (flavorConfig.channels == null || flavorConfig.channels.size() == 0) {
             Logger.error("write channel message failed, no channels!")
             return
@@ -60,7 +73,7 @@ abstract class BaseChannelApkMaker {
         writeChannel(baseApk, channelInfoJson)
 
         if (channelInfoJson != readChannel(baseApk)) {
-            Logger.info("channel message validation failed for APK file! -> ${baseApk}")
+            Logger.error("channel message validation failed for APK file! -> ${baseApk}")
         } else {
             Logger.info("write channel message ${channelInfoJson} for apk -> ${baseApk}")
         }
@@ -71,16 +84,10 @@ abstract class BaseChannelApkMaker {
      *
      * @param flavorConfig 渠道配置信息
      * @param baseApk
-     * @param releaseDir
      */
-    final void generateChannelApks(FlavorConfig flavorConfig, File baseApk, @Nullable File releaseDir) {
+    final void generateChannelApks(FlavorConfig flavorConfig, File baseApk) {
         if (baseApk == null || !baseApk.exists() || !baseApk.isFile()) {
             Logger.error("generate channel apks but base apk not found!")
-            return
-        }
-
-        if (flavorConfig.channels == null || flavorConfig.channels.size() == 0) {
-            Logger.error("generate channel apks failed, no channels found!")
             return
         }
 
@@ -93,17 +100,31 @@ abstract class BaseChannelApkMaker {
             channelDir.mkdirs()
         }
 
-        int lastDotIndex = baseApk.getName().lastIndexOf(APK_SUFFIX)
-        String baseName = baseApk.getName().substring(0, lastDotIndex)
+        String baseName = baseApk.getName().substring(0, baseApk.getName().lastIndexOf(APK_SUFFIX))
+
+        if (!writeChannel) {
+            Logger.error("write channel information is not enabled!")
+            String apkName = baseName + APK_SUFFIX
+            File apkFile = new File(channelDir, apkName)
+            FileUtil.copyFile(baseApk, apkFile)
+            Logger.info("generate ${flavorConfig.appName} apk success in dir ${channelDir}!")
+            return
+        }
+
+        if (flavorConfig.channels == null || flavorConfig.channels.size() == 0) {
+            Logger.error("generate channel apks failed, no channels found!")
+            return
+        }
+
         Gson gson = new Gson()
 
         for (ChannelConfig channelConfig : flavorConfig.channels) {
             int source = channelConfig.source
             String channel = channelConfig.channel
             if (channel != null && !channel.contains(String.valueOf(source))) {
-                channel = source + NAME_SEPARATOR + channel
+                channel = source + SEPARATOR + channel
             }
-            String channelApkName = baseName + NAME_SEPARATOR + channel + APK_SUFFIX
+            String channelApkName = baseName + SEPARATOR + channel + APK_SUFFIX
             File channelApkFile = new File(channelDir, channelApkName)
             FileUtil.copyFile(baseApk, channelApkFile)
 
@@ -111,7 +132,7 @@ abstract class BaseChannelApkMaker {
             writeChannel(channelApkFile, channelInfoJson)
 
             if (channelInfoJson != readChannel(channelApkFile)) {
-                Logger.info("channel message validation failed for APK file! -> ${channelApkFile}")
+                Logger.error("channel message validation failed for APK file! -> ${channelApkFile}")
             } else {
                 Logger.info("write channel message ${channelInfoJson} for apk -> ${channelApkFile}")
             }

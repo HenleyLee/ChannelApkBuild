@@ -122,11 +122,13 @@ public class ChannelApkBuildPlugin implements Plugin<Project> {
                         }
                         Logger.info("generate channel apks with Android Signature V${channelApkMaker.version} Scheme.")
                         channelApkMaker.checkSignature(apkFile)
+                        channelApkMaker.setWriteChannel(configuration.writeChannel)
+                        channelApkMaker.setReleaseDir(configuration.releaseChannelDir)
                         Logger.info("start generating channel apks through ${apkFile}...\n")
                         if (variant.buildType.debuggable) {
                             channelApkMaker.writeChannelMessage(flavorConfig, apkFile)
                         } else {
-                            channelApkMaker.generateChannelApks(flavorConfig, apkFile, configuration.releaseChannelDir)
+                            channelApkMaker.generateChannelApks(flavorConfig, apkFile)
                         }
                     }
                 }
