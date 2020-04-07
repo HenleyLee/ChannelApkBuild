@@ -4,7 +4,7 @@ dependencies {
     implementation gradleApi()
     implementation localGroovy()
     implementation 'org.json:json:20160810'
-    implementation 'com.android.tools.build:gradle:3.6.1'
+    implementation 'com.android.tools.build:gradle:3.6.2'
 
     // Gson(https://github.com/google/gson)
     implementation 'com.google.code.gson:gson:2.8.5'
