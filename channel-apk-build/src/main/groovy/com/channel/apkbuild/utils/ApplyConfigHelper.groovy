@@ -1,5 +1,6 @@
 package com.channel.apkbuild.utils
 
+import com.android.SdkConstants
 import com.android.build.gradle.BaseExtension
 import com.android.build.gradle.api.AndroidSourceDirectorySet
 import com.android.build.gradle.api.AndroidSourceSet
@@ -130,17 +131,13 @@ final class ApplyConfigHelper {
             flavorConfig.channels.addAll(flavorItem.channels)
         }
 
-        // res and java Src
+        // android source dir
         if (flavorDir != null && flavorDir.exists() && flavorDir.isDirectory()) {
             if (flavorItem.srcDir != null && !flavorItem.srcDir.isEmpty()) {
                 for (String dirName : flavorItem.srcDir) {
-                    File javaDir = new File(flavorDir, dirName + File.separator + "java")
-                    if (javaDir.exists() && javaDir.isDirectory()) {
-                        flavorConfig.javaSrcDirs.add(javaDir)
-                    }
-                    File resDir = new File(flavorDir, dirName + File.separator + "res")
-                    if (resDir.exists() && resDir.isDirectory()) {
-                        flavorConfig.resSrcDirs.add(resDir)
+                    File sourceDir = new File(flavorDir, dirName)
+                    if (sourceDir.exists() && sourceDir.isDirectory()) {
+                        flavorConfig.flavorDirs.add(sourceDir)
                     }
                 }
             } else {
@@ -165,18 +162,23 @@ final class ApplyConfigHelper {
             String flavorName = srcSet.name.replace(" resources", "")
             FlavorConfig flavorConfig = flavorConfigMap.get(flavorName)
 
-            if (flavorConfig == null || (flavorConfig.javaSrcDirs == null && flavorConfig.resSrcDirs == null)) {
+            if (flavorConfig == null || flavorConfig.flavorDirs == null || flavorConfig.flavorDirs.isEmpty()) {
                 continue
             }
             Logger.info("start deploy flavor ${flavorName} java and res source dirs...")
-            if (flavorConfig.javaSrcDirs != null) {
-                sourceSet.java.srcDirs(flavorConfig.javaSrcDirs.toArray())
-                Logger.info("deploy flavor ${flavorName} java srcDirs->${flavorConfig.javaSrcDirs}")
+            for (File dir : flavorConfig.flavorDirs) {
+                sourceSet.java.srcDir(new File("${dir.path}/java"))
+                sourceSet.resources.srcDir(new File("${dir.path}/resources"))
+                sourceSet.res.srcDir(new File("${dir.path}/${SdkConstants.FD_RES}"))
+                sourceSet.assets.srcDir(new File("${dir.path}/${SdkConstants.FD_ASSETS}"))
+                sourceSet.manifest.srcFile("${dir.path}/${SdkConstants.FN_ANDROID_MANIFEST_XML}")
+                sourceSet.aidl.srcDir(new File("${dir.path}/aidl"))
+                sourceSet.renderscript.srcDir(new File("${dir.path}/rs"))
+                sourceSet.jni.srcDir(new File("${dir.path}/jni"))
+                sourceSet.jniLibs.srcDir(new File("${dir.path}/jniLibs"))
+                sourceSet.shaders.srcDir(new File("${dir.path}/shaders"))
             }
-            if (flavorConfig.resSrcDirs != null) {
-                sourceSet.res.srcDirs(flavorConfig.resSrcDirs.toArray())
-                Logger.info("deploy flavor ${flavorName} res srcDirs->${flavorConfig.resSrcDirs}")
-            }
+            Logger.info("deploy flavor ${flavorName} sourceSet->${flavorConfig.flavorDirs}")
             size++
             Logger.newLine()
         }

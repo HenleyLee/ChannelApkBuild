@@ -5,11 +5,14 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.channels.FileChannel;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 /**
- * 文件操作工具类
+ * 工具类
  */
-public class FileUtil {
+public class Utility {
 
     public static void copyFile(String fromPath, String toPath) throws IOException {
         File fromF = new File(fromPath);
@@ -56,6 +59,10 @@ public class FileUtil {
         to.transferFrom(from, 0, from.size());
         from.close();
         to.close();
+    }
+
+    public static String format(Date date) {
+        return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault(Locale.Category.FORMAT)).format(date);
     }
 
 }

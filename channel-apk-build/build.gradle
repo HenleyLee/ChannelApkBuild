@@ -3,11 +3,11 @@ apply plugin: 'groovy'
 dependencies {
     implementation gradleApi()
     implementation localGroovy()
-    implementation 'org.json:json:20160810'
-    implementation 'com.android.tools.build:gradle:3.6.2'
+    implementation 'org.json:json:20190722'
+    implementation 'com.android.tools.build:gradle:3.6.3'
 
     // Gson(https://github.com/google/gson)
-    implementation 'com.google.code.gson:gson:2.8.5'
+    implementation 'com.google.code.gson:gson:2.8.6'
 
     // Walle(https://github.com/Meituan-Dianping/walle)
     implementation 'com.meituan.android.walle:payload_reader:1.1.6'
@@ -45,7 +45,7 @@ apply from: '../gradle/bintray.gradle'
 //            repository(url: uri('../repository'))
 //            pom.groupId = 'com.channel.apkbuild'
 //            pom.artifactId = 'channel-apk-build'
-//            pom.version = '3.6.1'
+//            pom.version = '3.6.3'
 //        }
 //    }
 //}

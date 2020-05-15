@@ -19,8 +19,7 @@ public class FlavorConfig {
     public String applicationId;
     public String signingName;
 
-    public List<File> resSrcDirs = new ArrayList<>(2);
-    public List<File> javaSrcDirs = new ArrayList<>(2);
+    public List<File> flavorDirs = new ArrayList<>(2);
 
     public Map<String, ClassField> resFields = new HashMap<>();
     public Map<String, ClassField> manifestFields = new HashMap<>();
@@ -44,8 +43,7 @@ public class FlavorConfig {
                 ", versionName='" + versionName + '\'' +
                 ", applicationId='" + applicationId + '\'' +
                 ", signingName='" + signingName + '\'' +
-                ", resSrcDirs=" + resSrcDirs +
-                ", javaSrcDirs=" + javaSrcDirs +
+                ", flavorDirs=" + flavorDirs +
                 '}';
     }
 

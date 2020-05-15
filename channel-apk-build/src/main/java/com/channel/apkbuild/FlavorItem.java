@@ -1,6 +1,7 @@
 package com.channel.apkbuild;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -82,6 +83,8 @@ public class FlavorItem {
             resValues = new LinkedHashMap<>();
         }
         resValues.put("app_name", appName);
+        resValues.put("application_id", appId);
+        resValues.put("release_time", Utility.format(new Date()));
         if (resValues.containsKey("facebook_app_id")) {
             resValues.put("fb_login_protocol_scheme", "fb" + resValues.get("facebook_app_id"));
         }

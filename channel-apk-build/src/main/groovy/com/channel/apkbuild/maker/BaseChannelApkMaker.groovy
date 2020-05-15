@@ -1,15 +1,15 @@
 package com.channel.apkbuild.maker
 
-
 import com.android.apksig.ApkVerifier
 import com.android.apksig.internal.util.AndroidSdkVersion
 import com.channel.apkbuild.ChannelConfig
-import com.channel.apkbuild.FileUtil
 import com.channel.apkbuild.FlavorConfig
+import com.channel.apkbuild.Utility
 import com.channel.apkbuild.utils.Consts
 import com.channel.apkbuild.utils.Logger
 import com.google.gson.Gson
 import org.gradle.api.GradleException
+
 /**
  * Generate Channel Apks
  *
@@ -106,7 +106,7 @@ abstract class BaseChannelApkMaker {
             Logger.error("write channel information is not enabled!")
             String apkName = baseName + APK_SUFFIX
             File apkFile = new File(channelDir, apkName)
-            FileUtil.copyFile(baseApk, apkFile)
+            Utility.copyFile(baseApk, apkFile)
             Logger.info("generate ${flavorConfig.appName} apk success in dir ${channelDir}!")
             return
         }
@@ -126,7 +126,7 @@ abstract class BaseChannelApkMaker {
             }
             String channelApkName = baseName + SEPARATOR + channel + APK_SUFFIX
             File channelApkFile = new File(channelDir, channelApkName)
-            FileUtil.copyFile(baseApk, channelApkFile)
+            Utility.copyFile(baseApk, channelApkFile)
 
             String channelInfoJson = gson.toJson(channelConfig)
             writeChannel(channelApkFile, channelInfoJson)
