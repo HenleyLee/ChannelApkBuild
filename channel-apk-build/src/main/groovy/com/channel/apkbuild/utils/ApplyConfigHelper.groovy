@@ -90,7 +90,7 @@ final class ApplyConfigHelper {
             String key = entry.getKey()
             String value = entry.getValue()
             if (value == null || value.length() == 0) {
-                Logger.error("config String buildConfig has null value with key: ${key}")
+                Logger.info("config String buildConfig has null value with key: ${key}")
                 continue
             }
             ClassField classField = new ClassFieldImpl("String", key, "\"" + value + "\"")
@@ -102,7 +102,7 @@ final class ApplyConfigHelper {
             String key = entry.getKey()
             Boolean value = entry.getValue()
             if (value == null || value.toString().length() == 0) {
-                Logger.error("config boolean buildConfig has null value with key: ${key}")
+                Logger.info("config boolean buildConfig has null value with key: ${key}")
                 continue
             }
             ClassField classField = new ClassFieldImpl("boolean", key, String.valueOf(value))
@@ -114,7 +114,7 @@ final class ApplyConfigHelper {
             String key = entry.getKey()
             String value = entry.getValue()
             if (value == null || value.length() == 0) {
-                Logger.error("config resValue has null value with key: ${key}")
+                Logger.info("config resValue has null value with key: ${key}")
                 continue
             }
             ClassField classField = new ClassFieldImpl("string", key, value)
@@ -144,7 +144,7 @@ final class ApplyConfigHelper {
                 Logger.info("${flavorItem.flavorName} flavorItem srcDir is empty: ${flavorItem.srcDir}.")
             }
         } else {
-            Logger.error("skip apply res and java！${flavorDir} does not exist or is not a directory.")
+            Logger.info("skip apply res and java！${flavorDir} does not exist or is not a directory.")
         }
         return flavorConfig
     }
@@ -159,30 +159,29 @@ final class ApplyConfigHelper {
         int size = 0
         for (AndroidSourceSet sourceSet : android.sourceSets) {
             AndroidSourceDirectorySet srcSet = sourceSet.res
-            String flavorName = srcSet.name.replace(" resources", "")
+            String flavorName = srcSet.name.replace(" resources", "").trim()
             FlavorConfig flavorConfig = flavorConfigMap.get(flavorName)
-
             if (flavorConfig == null || flavorConfig.flavorDirs == null || flavorConfig.flavorDirs.isEmpty()) {
                 continue
             }
-            Logger.info("start deploy flavor ${flavorName} java and res source dirs...")
+            Logger.info("start deploy flavor ${flavorName} android sourceSet dirs...")
             for (File dir : flavorConfig.flavorDirs) {
-                sourceSet.java.srcDir(new File("${dir.path}/java"))
-                sourceSet.resources.srcDir(new File("${dir.path}/resources"))
                 sourceSet.res.srcDir(new File("${dir.path}/${SdkConstants.FD_RES}"))
+                sourceSet.java.srcDir(new File("${dir.path}/${SdkConstants.FD_JAVA}"))
+                sourceSet.aidl.srcDir(new File("${dir.path}/${SdkConstants.FD_AIDL}"))
                 sourceSet.assets.srcDir(new File("${dir.path}/${SdkConstants.FD_ASSETS}"))
                 sourceSet.manifest.srcFile("${dir.path}/${SdkConstants.FN_ANDROID_MANIFEST_XML}")
-                sourceSet.aidl.srcDir(new File("${dir.path}/aidl"))
-                sourceSet.renderscript.srcDir(new File("${dir.path}/rs"))
-                sourceSet.jni.srcDir(new File("${dir.path}/jni"))
+                sourceSet.resources.srcDir(new File("${dir.path}/${SdkConstants.FD_JAVA_RES}"))
+                sourceSet.renderscript.srcDir(new File("${dir.path}/${SdkConstants.FD_RENDERSCRIPT}"))
+                sourceSet.jni.srcDir(new File("${dir.path}/${SdkConstants.FD_JNI}"))
                 sourceSet.jniLibs.srcDir(new File("${dir.path}/jniLibs"))
                 sourceSet.shaders.srcDir(new File("${dir.path}/shaders"))
             }
-            Logger.info("deploy flavor ${flavorName} sourceSet->${flavorConfig.flavorDirs}")
+            Logger.info("deploy flavor ${flavorName} android sourceSet->${flavorConfig.flavorDirs}")
             size++
             Logger.newLine()
         }
-        Logger.info("deploy android source successfully! A total of ${size} source sets!\n")
+        Logger.info("deploy android source sourceSets successfully! A total of ${size} android sourceSets!\n")
     }
 
     /**
@@ -198,7 +197,7 @@ final class ApplyConfigHelper {
         for (ProductFlavor productFlavor : android.productFlavors) {
             FlavorConfig flavorConfig = flavorConfigMap.get(productFlavor.name)
             if (flavorConfig == null) {
-                Logger.error("product flavor ${productFlavor.name} config not found!!!")
+                Logger.error("product flavor ${productFlavor.name} config not found!")
                 continue
             }
             Logger.info("start deploy product flavor ${productFlavor.name} config...")

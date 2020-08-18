@@ -24,8 +24,8 @@ signingConfigs {
 在根工程的 `build.gradle` 中，添加对打包插件的依赖：
 ```gradle
 dependencies {
-    classpath 'com.android.tools.build:gradle:3.5.3'
-    classpath 'com.channel.apkbuild:channel-apk-build:3.5.3'
+    classpath 'com.android.tools.build:gradle:4.0.0'
+    classpath 'com.channel.apkbuild:channel-apk-build:4.0.0'
 }
 ```
 
@@ -39,7 +39,7 @@ apply plugin: 'com.channel.apkbuild'
 在主 `App` 工程的 `build.gradle` 中，添加读取渠道信息的类库依赖：
 ```gradle
 dependencies {
-    api 'com.meituan.android.walle:library:1.1.6'
+    api 'com.meituan.android.walle:library:1.1.7'
 }
 ```
 

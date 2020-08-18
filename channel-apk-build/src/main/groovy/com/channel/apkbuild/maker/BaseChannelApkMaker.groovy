@@ -58,7 +58,7 @@ abstract class BaseChannelApkMaker {
             return
         }
         if (!writeChannel) {
-            Logger.error("write channel information is not enabled!")
+            Logger.info("write channel information is not enabled!")
             return
         }
         if (flavorConfig.channels == null || flavorConfig.channels.size() == 0) {
@@ -66,9 +66,9 @@ abstract class BaseChannelApkMaker {
             return
         }
 
+        Logger.info("start generating channel apks through ${baseApk}...\n")
         Gson gson = new Gson()
         ChannelConfig channelConfig = flavorConfig.channels.get(0)
-
         String channelInfoJson = gson.toJson(channelConfig)
         writeChannel(baseApk, channelInfoJson)
 
@@ -103,7 +103,7 @@ abstract class BaseChannelApkMaker {
         String baseName = baseApk.getName().substring(0, baseApk.getName().lastIndexOf(APK_SUFFIX))
 
         if (!writeChannel) {
-            Logger.error("write channel information is not enabled!")
+            Logger.info("write channel information is not enabled!")
             String apkName = baseName + APK_SUFFIX
             File apkFile = new File(channelDir, apkName)
             Utility.copyFile(baseApk, apkFile)
@@ -116,8 +116,8 @@ abstract class BaseChannelApkMaker {
             return
         }
 
+        Logger.info("start generating channel apks through ${baseApk}...\n")
         Gson gson = new Gson()
-
         for (ChannelConfig channelConfig : flavorConfig.channels) {
             int source = channelConfig.source
             String channel = channelConfig.channel

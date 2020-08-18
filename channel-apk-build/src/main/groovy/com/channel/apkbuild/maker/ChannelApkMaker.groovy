@@ -6,7 +6,7 @@ package com.channel.apkbuild.maker
  * @author liyunlong
  * @date 2018/9/7 10:20
  */
-public final class ChannelApkMaker {
+final class ChannelApkMaker {
 
     final static ChannelApkMakerV1 getChannelApkMakerV1() {
         return new ChannelApkMakerV1()

@@ -17,8 +17,7 @@ import org.gradle.api.Project
 /**
  * Registers the plugin's tasks and generate the channel package.
  *
- * @author liyunlong
- * @date 2018/5/12 15:36
+ * @author liyunlong* @date 2018/5/12 15:36
  */
 public class ChannelApkBuildPlugin implements Plugin<Project> {
 
@@ -58,23 +57,24 @@ public class ChannelApkBuildPlugin implements Plugin<Project> {
         }
         Logger.info("read channel config file ${configJson} successfully! A total of ${channelJsonData.groups.size()} groups and ${channelJsonData.flavors.size()} flavors.\n")
 
+        AppExtension android = project.extensions.android
+
         // 读取渠道配置信息
         File flavorDir = ext.get("flavorDir")
-        if (flavorDir == null) {
-            Logger.error("flavor directory is null, you must set the correct flavor directory value!")
-            return
-        }
-        if (!flavorDir.exists()) {
-            Logger.error("flavor directory ${flavorDir} is not exist, you must set the correct flavor directory value!")
-            return
-        }
-        if (!flavorDir.isDirectory()) {
-            Logger.error("flavor directory ${flavorDir} is not a directory, you must set the correct flavor directory value!")
-            return
-        }
-        Map<String, FlavorConfig> flavorConfigMap = ApplyConfigHelper.getFlavorConfigs(channelJsonData, flavorDir)
+//        if (flavorDir == null) {
+//            Logger.error("flavor directory is null, you must set the correct flavor directory value!")
+//            return
+//        }
+//        if (!flavorDir.exists()) {
+//            Logger.error("flavor directory ${flavorDir} is not exist, you must set the correct flavor directory value!")
+//            return
+//        }
+//        if (!flavorDir.isDirectory()) {
+//            Logger.error("flavor directory ${flavorDir} is not a directory, you must set the correct flavor directory value!")
+//            return
+//        }
 
-        AppExtension android = project.extensions.android
+        Map<String, FlavorConfig> flavorConfigMap = ApplyConfigHelper.getFlavorConfigs(channelJsonData, flavorDir)
 
         // 设置资源文件夹
         ApplyConfigHelper.applyAndroidSource(android, flavorConfigMap)
@@ -104,6 +104,8 @@ public class ChannelApkBuildPlugin implements Plugin<Project> {
 
                 variant.outputs.all { BaseVariantOutput output ->
 
+                    variant.mergedFlavor.versionCode
+                    String variantName = variant.name.capitalize()
                     String flavorName = variant.flavorName
                     FlavorConfig flavorConfig = flavorConfigMap.get(flavorName)
                     String debugSuffix = variant.buildType.debuggable ? "-debug" : ""
@@ -124,7 +126,6 @@ public class ChannelApkBuildPlugin implements Plugin<Project> {
                         channelApkMaker.checkSignature(apkFile)
                         channelApkMaker.setWriteChannel(configuration.writeChannel)
                         channelApkMaker.setReleaseDir(configuration.releaseChannelDir)
-                        Logger.info("start generating channel apks through ${apkFile}...\n")
                         if (variant.buildType.debuggable) {
                             channelApkMaker.writeChannelMessage(flavorConfig, apkFile)
                         } else {

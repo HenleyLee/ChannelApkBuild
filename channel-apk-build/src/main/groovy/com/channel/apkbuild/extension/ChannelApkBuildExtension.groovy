@@ -9,7 +9,7 @@ import org.gradle.api.GradleException
  * @author liyunlong
  * @date 2018/4/10 15:28
  */
-public class ChannelApkBuildExtension {
+class ChannelApkBuildExtension {
 
     /**
      * Whether the channel bundle task is enabled
@@ -44,13 +44,13 @@ public class ChannelApkBuildExtension {
             throw new GradleException(Consts.PREFIX_OF_LOGGER + "config json ${configJson} is not a file, you must set the correct config json value!")
         }
 
-        if (flavorDir == null) {
-            throw new GradleException(Consts.PREFIX_OF_LOGGER + "flavor directory is null, you must set the correct flavor directory value!")
-        } else if (!flavorDir.exists()) {
-            throw new GradleException(Consts.PREFIX_OF_LOGGER + "flavor directory ${flavorDir} is not exist, you must set the correct flavor directory value!")
-        } else if (!flavorDir.isDirectory()) {
-            throw new GradleException(Consts.PREFIX_OF_LOGGER + "flavor directory ${flavorDir} is not a directory, you must set the correct flavor directory value!")
-        }
+//        if (flavorDir == null) {
+//            throw new GradleException(Consts.PREFIX_OF_LOGGER + "flavor directory is null, you must set the correct flavor directory value!")
+//        } else if (!flavorDir.exists()) {
+//            throw new GradleException(Consts.PREFIX_OF_LOGGER + "flavor directory ${flavorDir} is not exist, you must set the correct flavor directory value!")
+//        } else if (!flavorDir.isDirectory()) {
+//            throw new GradleException(Consts.PREFIX_OF_LOGGER + "flavor directory ${flavorDir} is not a directory, you must set the correct flavor directory value!")
+//        }
     }
 
 
