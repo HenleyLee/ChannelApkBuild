@@ -20,7 +20,7 @@ publish {
     userOrg = 'henleylee'
     groupId = 'com.channel.apkbuild'
     artifactId = 'channel-apk-build'
-    publishVersion = '4.0.0'
+    publishVersion = '4.0.1'
     uploadName = 'ChannelApkBuild'
     desc = 'Android V1 and V2 Signature Channel Package Plugin.'
     website = siteUrl

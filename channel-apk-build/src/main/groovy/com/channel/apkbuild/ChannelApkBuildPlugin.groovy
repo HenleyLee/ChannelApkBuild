@@ -17,7 +17,8 @@ import org.gradle.api.Project
 /**
  * Registers the plugin's tasks and generate the channel package.
  *
- * @author liyunlong* @date 2018/5/12 15:36
+ * @author liyunlong
+ * @date 2018/5/12 15:36
  */
 public class ChannelApkBuildPlugin implements Plugin<Project> {
 
