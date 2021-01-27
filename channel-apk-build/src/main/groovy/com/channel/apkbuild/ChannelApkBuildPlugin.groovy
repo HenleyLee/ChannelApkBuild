@@ -2,7 +2,7 @@ package com.channel.apkbuild
 
 import com.android.build.gradle.AppExtension
 import com.android.build.gradle.api.ApkVariant
-import com.android.build.gradle.api.BaseVariantOutput
+import com.android.build.gradle.api.ApkVariantOutput
 import com.android.build.gradle.tasks.PackageAndroidArtifact
 import com.channel.apkbuild.extension.ChannelApkBuildExtension
 import com.channel.apkbuild.maker.BaseChannelApkMaker
@@ -103,20 +103,20 @@ public class ChannelApkBuildPlugin implements Plugin<Project> {
 
             android.applicationVariants.all { ApkVariant variant ->
 
-                variant.outputs.all { BaseVariantOutput output ->
+                variant.outputs.all { ApkVariantOutput output ->
 
-                    variant.mergedFlavor.versionCode
-                    String variantName = variant.name.capitalize()
-                    String flavorName = variant.flavorName
-                    FlavorConfig flavorConfig = flavorConfigMap.get(flavorName)
+                    FlavorConfig flavorConfig = flavorConfigMap.get(variant.flavorName)
                     String debugSuffix = variant.buildType.debuggable ? "-debug" : ""
                     String appNamePrefix = "${flavorConfig.appName}-${variant.versionName}-${variant.versionCode}"
-                    outputFileName = "${appNamePrefix}${debugSuffix}.apk"
+                    String outputFileName = "${appNamePrefix}${debugSuffix}.apk"
+                    // output.outputFileName = outputFileName
 
                     variant.assembleProvider.get().doLast {
+
                         PackageAndroidArtifact packageAndroidArtifact = variant.packageApplicationProvider.get()
                         File outputDirectory = packageAndroidArtifact.outputDirectory.asFile.get()
-                        File apkFile = new File(outputDirectory, apkData.outputFileName)
+                        File apkFile = new File(outputDirectory, output.outputFileName)
+
                         BaseChannelApkMaker channelApkMaker
                         if (SigningConfigHelper.isV2SignatureSchemeEnabled(variant)) {
                             channelApkMaker = ChannelApkMaker.getChannelApkMakerV2()

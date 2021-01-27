@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 29
-    buildToolsVersion "30.0.2"
+    buildToolsVersion "30.0.3"
     defaultConfig {
         applicationId "com.henley.channel.apkbuild"
         minSdkVersion 14
@@ -58,4 +58,4 @@ dependencies {
 }
 
 // ChannelApkBuild配置
-//apply from: '../gradle/channel.gradle'
+apply from: '../gradle/channel.gradle'

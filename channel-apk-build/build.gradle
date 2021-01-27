@@ -4,7 +4,7 @@ dependencies {
     implementation gradleApi()
     implementation localGroovy()
     implementation 'org.json:json:20190722'
-    implementation 'com.android.tools.build:gradle:4.0.1'
+    implementation 'com.android.tools.build:gradle:4.1.1'
 
     // Gson(https://github.com/google/gson)
     implementation 'com.google.code.gson:gson:2.8.6'
@@ -45,7 +45,7 @@ apply from: '../gradle/bintray.gradle'
 //            repository(url: uri('../repository'))
 //            pom.groupId = 'com.channel.apkbuild'
 //            pom.artifactId = 'channel-apk-build'
-//            pom.version = '3.6.3.1'
+//            pom.version = '4.1.1'
 //        }
 //    }
 //}

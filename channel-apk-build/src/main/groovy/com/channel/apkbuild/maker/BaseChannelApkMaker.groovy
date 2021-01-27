@@ -100,7 +100,8 @@ abstract class BaseChannelApkMaker {
             channelDir.mkdirs()
         }
 
-        String baseName = baseApk.getName().substring(0, baseApk.getName().lastIndexOf(APK_SUFFIX))
+        // String baseName = baseApk.getName().substring(0, baseApk.getName().lastIndexOf(APK_SUFFIX))
+        String baseName = "${flavorConfig.appName}-${flavorConfig.versionName}-${flavorConfig.versionCode}"
 
         if (!writeChannel) {
             Logger.info("write channel information is not enabled!")

@@ -2,8 +2,8 @@ package com.channel.apkbuild.utils
 
 import com.android.SdkConstants
 import com.android.build.gradle.BaseExtension
-import com.android.build.gradle.api.AndroidSourceDirectorySet
-import com.android.build.gradle.api.AndroidSourceSet
+import com.android.build.api.dsl.AndroidSourceDirectorySet
+import com.android.build.api.dsl.AndroidSourceSet
 import com.android.builder.internal.ClassFieldImpl
 import com.android.builder.model.ClassField
 import com.android.builder.model.ProductFlavor
